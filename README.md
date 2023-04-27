@@ -10,7 +10,7 @@
 @RestController
 public class ExcelController {
 
-    @GetMapping("/excel/이름")
+    @PostMapping("/excel/이름")
     public void exportExcelFile(HttpServletResponse response, @RequestBody ExcelLayout<List<DTO>> dto) throws IOException {
         var fileName = "파일명" + ".xlsx";
         response.setHeader(
