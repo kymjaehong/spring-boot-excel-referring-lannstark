@@ -1,25 +1,22 @@
 # excel-download
-### Fork Git Link
-[lannstark](https://github.com/lannstark/excel-download)
+reference : https://github.com/lannstark/excel-download
 
 <br>
-
-## 클라이언트가 데이터를 Body에 담아 요청
 ### Controller
 ```
 @RestController
+@RequiredArgsConstructor
 public class ExcelController {
+    private final DomainReadService domainReadService;
 
-    @PostMapping("/excel/이름")
-    public void exportExcelFile(HttpServletResponse response, @RequestBody ExcelLayout<List<DTO>> dto) throws IOException {
-        var fileName = "파일명" + ".xlsx";
-        response.setHeader(
-                "Content-disposition",
-                "attachment; filename=" + java.net.URLEncoder.encode(fileName, StandardCharsets.UTF_8));
+    @GetMapping("domain/excel-download")
+    public void getExcel(HttpServletResponse response) throws IOException {
+        // 프론트에서 파일 명 등 지정 가능
         response.setContentType("application/vnd.ms-excel");
-
-        ExcelFile<DTO> excelFile = new OneSheetExcelFile<>(dto.getData(), DTO.class);
-        excelFile.write(response.getOutputStream());
+        
+        List<DTO> data = domainReadService.getExcel();
+        ExcelFile<DTO> excel = new OneSheetExcelFile<>(data, DTO.class);
+        excel.write(response.getOutputStream());
     }
 }
 ```
@@ -55,14 +52,4 @@ public class DTO {
 
 }
 ```
-<br>
 
-### ExcelLayout
-```
-@NoArgsConstructor
-@Getter
-@ToString
-public class ExcelLayout<T> {
-    private T data;
-}
-```
