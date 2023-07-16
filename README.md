@@ -4,7 +4,7 @@ reference : https://github.com/lannstark/excel-download
 <br>
 
 ### Controller
-```
+```java
 @RestController
 @RequiredArgsConstructor
 public class ExcelController {
@@ -25,7 +25,7 @@ public class ExcelController {
 <br>
 
 ### DTO
-```
+```java
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
